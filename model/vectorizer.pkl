@@ -1,1 +1,25 @@
+import pickle
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+class Vectorizer:
+    def __init__(self):
+        self.vectorizer = TfidfVectorizer(stop_words='english', max_features=5000)
+
+    def fit(self, texts):
+        self.vectorizer.fit(texts)
+
+    def transform(self, texts):
+        return self.vectorizer.transform(texts)
+
+    def save(self, path="vectorizer.pkl"):
+        with open(path, "wb") as f:
+            pickle.dump(self.vectorizer, f)
+
+    @staticmethod
+    def load(path="vectorizer.pkl"):
+        with open(path, "rb") as f:
+            vectorizer = pickle.load(f)
+        obj = Vectorizer()
+        obj.vectorizer = vectorizer
+        return obj
 
